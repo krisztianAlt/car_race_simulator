@@ -1,4 +1,5 @@
-package PACKAGE_NAME;
-
 public class Car {
+    public static String justTest(){
+        return "Hi from Car";
+    }
 }
