@@ -1,3 +1,6 @@
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.io.File;
 import java.util.*;
 
 public class Main {
@@ -123,6 +126,9 @@ public class Main {
 
     private static void printRaceResults(){
         System.out.print("\033[2J\033[1;1H");
+        System.out.print("The race is on...");
+        playSound("palik" + randomNumberGenerator(1, 4));
+        System.out.print("\033[2J\033[1;1H");
         System.out.println(String.join("", Collections.nCopies(46, "=")));
         System.out.format("%21s%12s%13s%n", "Name", "Distance", "Type");
         System.out.println(String.join("", Collections.nCopies(46, "=")));
@@ -140,4 +146,19 @@ public class Main {
         printRaceResults();
     }
 
+    public static void playSound(String filename) {
+
+        File fileWithPath = new File("../../../sound/" + filename + ".wav");
+
+        try {
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(fileWithPath));
+            clip.start();
+
+            Thread.sleep(clip.getMicrosecondLength() / 1000);
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }
