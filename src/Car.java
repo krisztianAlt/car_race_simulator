@@ -86,7 +86,7 @@ public class Car {
 
     }
 
-    public int getDistanceTraveled() {
+    public Integer getDistanceTraveled() {
 
         return distanceTraveled;
 

@@ -48,7 +48,7 @@ public class Motorcycle {
 
     }
 
-    public int getDistanceTraveled() {
+    public Integer getDistanceTraveled() {
 
         return distanceTraveled;
 

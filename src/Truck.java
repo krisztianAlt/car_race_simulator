@@ -8,7 +8,7 @@ public class Truck {
     private int speed;
     private String name;
     private int breakdownTurnsLeft;
-    private int distanceTraveled;
+    private Integer distanceTraveled;
 
     public void setSpeed(int speed) {
 
@@ -65,7 +65,7 @@ public class Truck {
 
     }
 
-    public int getDistanceTraveled() {
+    public Integer getDistanceTraveled() {
 
         return distanceTraveled;
 

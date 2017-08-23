@@ -1,7 +1,4 @@
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Main {
 
@@ -13,6 +10,8 @@ public class Main {
 
     static Integer numberOfTrucksInRace = 10; // MAXIMUM: 1000 - listen to createNewTruckName() method in Truck class
     static List<Truck> trucks = new ArrayList<>();
+
+    static ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
 
     public static Integer randomNumberGenerator(int minimum, int maximum) {
 
@@ -47,8 +46,7 @@ public class Main {
         }
 
         for (int motorcycleNum = 1; motorcycleNum <= numberOfMotorcyclesInRace; motorcycleNum++){
-            Motorcycle newMotorcycle = new Motorcycle();
-            motorcycles.add(newMotorcycle);
+            motorcycles.add(new Motorcycle());
         }
 
         for (int truckNum = 1; truckNum <= numberOfTrucksInRace; truckNum++){
@@ -75,21 +73,71 @@ public class Main {
         }
 
         for (Car car: cars){
-            System.out.println(car.getName() + ", norm speed: " + car.getNormalSpeed() + " km/h, traveled: " + car.getDistanceTraveled() + " km");
+
+            ArrayList<String> nextCarData = new ArrayList<>();
+            nextCarData.add(car.getName());
+            nextCarData.add(car.getDistanceTraveled().toString());
+            String type = new String("car");
+            nextCarData.add(type);
+            result.add(nextCarData);
+
         }
 
         for (Motorcycle motorcycle: motorcycles){
-            System.out.println(motorcycle.getName() + ", norm speed: " + motorcycle.getSpeed() + " km/h, traveled: " + motorcycle.getDistanceTraveled() + " km");
+            ArrayList<String> nextMotorcycleData = new ArrayList<>();
+            nextMotorcycleData.add(motorcycle.getName());
+            nextMotorcycleData.add(motorcycle.getDistanceTraveled().toString());
+            String type = new String("motorcycle");
+            nextMotorcycleData.add(type);
+            result.add(nextMotorcycleData);
+
         }
 
         for (Truck truck: trucks){
-            System.out.println(truck.getName() + ", speed: " + truck.getSpeed() + " km/h, traveled: " + truck.getDistanceTraveled() + " km.");
+            ArrayList<String> nextTruckData = new ArrayList<>();
+            nextTruckData.add(truck.getName());
+            nextTruckData.add(truck.getDistanceTraveled().toString());
+            String type = new String("truck");
+            nextTruckData.add(type);
+            result.add(nextTruckData);
+
         }
+
+        result = sortedResult(result);
+    }
+
+    private static ArrayList<ArrayList<String>> sortedResult(ArrayList<ArrayList<String>> resultList){
+
+        for (int i = 0; i < resultList.size()-1; i++) {
+            for (int j = 0; j < resultList.size()-1; j++) {
+                if (Integer.parseInt(resultList.get(j).get(1)) < Integer.parseInt(resultList.get(j + 1).get(1))) {
+                    ArrayList temp = resultList.get(j);
+                    resultList.set(j, resultList.get(j+1));
+                    resultList.set(j+1, temp);
+                }
+            }
+        }
+
+        return resultList;
+    }
+
+    private static void printRaceResults(){
+        System.out.print("\033[2J\033[1;1H");
+        System.out.println(String.join("", Collections.nCopies(46, "=")));
+        System.out.format("%21s%12s%13s%n", "Name", "Distance", "Type");
+        System.out.println(String.join("", Collections.nCopies(46, "=")));
+
+        for (ArrayList nextVehicle: result){
+            System.out.format("%21s%12s%13s%n", nextVehicle.get(0), nextVehicle.get(1) + " km", nextVehicle.get(2));
+        }
+
+        System.out.println(String.join("", Collections.nCopies(46, "=")));
     }
 
     public static void main(String[] args) {
         createVehicles();
         simulateRace();
+        printRaceResults();
     }
 
 }
